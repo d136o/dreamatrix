@@ -20,4 +20,26 @@ public class DreamatrixService extends DreamService {
         // Set the dream layout
         setContentView(R.layout.service_dreamatrix);
     }
+
+	@Override
+	public void onDetachedFromWindow() {
+		super.onDetachedFromWindow();
+		Log.d(TAG, "onDetachedFromWindow");	
+	}
+
+	@Override
+	public void onDreamingStarted() {
+		super.onDreamingStarted();
+		Log.d(TAG, "onDreamingStarted");
+		
+		// Start dream animation here
+		
+		
+	}
+
+	@Override
+	public void onDreamingStopped() {
+		super.onDreamingStopped();
+		Log.d(TAG, "onDreamingStopped");
+	}
 }
