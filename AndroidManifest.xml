@@ -22,6 +22,23 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    </application>
+    
+    	<service
+			android:name="com.example.thamatrix.DreamatrixService"
+	   	  	android:exported="true"
+   		  	android:icon="@drawable/ic_launcher"
+   		  	android:label="@string/dreamatrix_service_label" >
 
+	     	<intent-filter>
+    	    	<action android:name="android.service.dreams.DreamService" />
+        	 	<category android:name="android.intent.category.DEFAULT" />
+ 		    </intent-filter>
+
+    		<!-- Point to additional information for this dream (optional) -->
+  		   	<meta-data
+				android:name="android.service.dream"
+      		   	android:resource="@xml/dreamatrix" />
+ 		</service>
+ 		
+	</application>
 </manifest>
