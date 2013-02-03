@@ -22,5 +22,4 @@
           android:textColor="#88ffffff"
           android:textSize="24sp"/>
      </RelativeLayout>
-         
 </FrameLayout>

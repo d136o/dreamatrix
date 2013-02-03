@@ -14,9 +14,6 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-/**
- * TODO: document your custom view class.
- */
 public class DreamatrixView extends SurfaceView implements SurfaceHolder.Callback {
 	
 	static final String TAG = "DreamatrixView";
@@ -81,7 +78,7 @@ public class DreamatrixView extends SurfaceView implements SurfaceHolder.Callbac
 		
 		Log.d(TAG, "DreamatrixView");
 		
-		setBackgroundResource(R.drawable.matrix);
+		//setBackgroundResource(R.drawable.matrix);
 		
         SurfaceHolder holder = getHolder();
         holder.addCallback(this);
@@ -112,8 +109,6 @@ public class DreamatrixView extends SurfaceView implements SurfaceHolder.Callbac
 	@Override
 	public void surfaceCreated(SurfaceHolder holder) {
 		Log.d(TAG, "surfaceCreated");
-		thread.setRunning(true);
-        thread.start();
 	}
 
 	@Override
@@ -128,5 +123,11 @@ public class DreamatrixView extends SurfaceView implements SurfaceHolder.Callbac
             } catch (InterruptedException e) {
             }
         }
+	}
+	
+	public void startDrawing() {
+		Log.d(TAG, "startDrawing");
+		thread.setRunning(true);
+        thread.start();
 	}
 }

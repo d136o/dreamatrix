@@ -2,10 +2,13 @@ package com.example.thamatrix;
 
 import android.service.dreams.DreamService;
 import android.util.Log;
+import android.view.SurfaceView;
 
 public class DreamatrixService extends DreamService {
 	
 	static final String TAG = "DreamatrixService";
+	
+	private DreamatrixView mDreamatrixView;
 	
 	@Override
     public void onAttachedToWindow() {
@@ -17,8 +20,10 @@ public class DreamatrixService extends DreamService {
         setInteractive(false);
         // Hide system UI
         setFullscreen(true);
-        // Set the dream layout
+		// Set the dream layout
         setContentView(R.layout.dreamatrix_layout);
+        
+        mDreamatrixView = (DreamatrixView) findViewById(R.id.dreamatrix);
     }
 
 	@Override
@@ -33,8 +38,7 @@ public class DreamatrixService extends DreamService {
 		Log.d(TAG, "onDreamingStarted");
 		
 		// Start dream animation here
-		
-		
+		mDreamatrixView.startDrawing();
 	}
 
 	@Override
