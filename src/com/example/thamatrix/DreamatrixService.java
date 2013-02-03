@@ -53,9 +53,7 @@ public class DreamatrixService extends DreamService {
 		
 		@Override
 		public void onReceive(Context arg0, Intent arg1) {
-			// TODO Auto-generated method stub
-			// getting some text, give it to the view!
-			String headline = "blah blah blah";
+			String headline = ((DreamatrixApp) getApplication()).headline.getNext();;
 			mDreamatrixView.addMatrixText(headline);
 		}
 		
