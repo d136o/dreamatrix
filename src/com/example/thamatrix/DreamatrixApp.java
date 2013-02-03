@@ -6,8 +6,10 @@ import android.util.Log;
 public class DreamatrixApp extends Application {
 	static final String TAG = "DreamatrixApp";
 
+	
 	Headline headline;
-
+	static final String NEW_HEADLINE_ACTION = "com.example.thamatrix.NEW_HEADLINE_ACTION";
+	
 	@Override
 	public void onCreate() {
 		super.onCreate();

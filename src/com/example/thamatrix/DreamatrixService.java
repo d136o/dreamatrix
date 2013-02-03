@@ -3,6 +3,7 @@ package com.example.thamatrix;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.service.dreams.DreamService;
 import android.util.Log;
 
@@ -11,6 +12,7 @@ public class DreamatrixService extends DreamService {
 	static final String TAG = "DreamatrixService";
 	
 	private DreamatrixView mDreamatrixView;
+	private DreamatrixTextReceiver mTextReceiver;
 	
 	@Override
     public void onAttachedToWindow() {
@@ -26,6 +28,10 @@ public class DreamatrixService extends DreamService {
         setContentView(R.layout.dreamatrix_layout);
         
         mDreamatrixView = (DreamatrixView) findViewById(R.id.dreamatrix);
+
+        this.mTextReceiver = new DreamatrixTextReceiver();
+        Context c = getApplicationContext();
+        c.registerReceiver(this.mTextReceiver, new IntentFilter(DreamatrixApp.NEW_HEADLINE_ACTION));
     }
 
 	@Override
@@ -49,10 +55,10 @@ public class DreamatrixService extends DreamService {
 		Log.d(TAG, "onDreamingStopped");
 	}
 	
-	class TextReceiver extends BroadcastReceiver {
+	class DreamatrixTextReceiver extends BroadcastReceiver {
 		
 		@Override
-		public void onReceive(Context arg0, Intent arg1) {
+		public void onReceive(Context appContext, Intent intent) {
 			String headline = ((DreamatrixApp) getApplication()).headline.getNext();;
 			mDreamatrixView.addMatrixText(headline);
 		}
