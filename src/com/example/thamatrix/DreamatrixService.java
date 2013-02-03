@@ -2,7 +2,6 @@ package com.example.thamatrix;
 
 import android.service.dreams.DreamService;
 import android.util.Log;
-import android.view.SurfaceView;
 
 public class DreamatrixService extends DreamService {
 	
