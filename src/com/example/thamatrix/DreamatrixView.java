@@ -58,19 +58,22 @@ public class DreamatrixView extends SurfaceView implements SurfaceHolder.Callbac
                     synchronized (mSurfaceHolder) {
                         doDraw(c);
                     }
-                } finally {
-                    if (c != null) {
-                        mSurfaceHolder.unlockCanvasAndPost(c);
-                    }
+                }
+                finally {
+                   if (c != null) {
+                       mSurfaceHolder.unlockCanvasAndPost(c);
+                   }
                 }
             }
         }
 		
 		private void doDraw(Canvas c) {
 			Log.d(TAG, "doDraw");
+			//String nextHeadline = ((DreamatrixApp) mContext.getApplicationContext()).headline.getNext();
+			//Log.d(TAG, "Drawing the headline " + nextHeadline);
 			
 			if(c != null)
-				c.drawColor(Color.BLUE);
+				c.drawColor(Color.RED);
 			
 		}
 	}
@@ -114,7 +117,6 @@ public class DreamatrixView extends SurfaceView implements SurfaceHolder.Callbac
 	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
-		
 		Log.d(TAG, "onDraw");
 	}
 
