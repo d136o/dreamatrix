@@ -70,7 +70,9 @@ public class DreamatrixView extends SurfaceView implements SurfaceHolder.Callbac
 		private void doDraw(Canvas c) {
 			Log.d(TAG, "doDraw");
 			
-			c.drawColor(Color.RED);
+			if(c != null)
+				c.drawColor(Color.BLUE);
+			
 		}
 	}
 
@@ -78,6 +80,8 @@ public class DreamatrixView extends SurfaceView implements SurfaceHolder.Callbac
 		super(context, attrs);
 		
 		Log.d(TAG, "DreamatrixView");
+		
+		setBackgroundResource(R.drawable.matrix);
 		
         SurfaceHolder holder = getHolder();
         holder.addCallback(this);
@@ -114,6 +118,15 @@ public class DreamatrixView extends SurfaceView implements SurfaceHolder.Callbac
 
 	@Override
 	public void surfaceDestroyed(SurfaceHolder holder) {
-		Log.d(TAG, "surfaceDestroyed");		
+		Log.d(TAG, "surfaceDestroyed");	
+		boolean retry = true;
+        thread.setRunning(false);
+        while (retry) {
+            try {
+                thread.join();
+                retry = false;
+            } catch (InterruptedException e) {
+            }
+        }
 	}
 }

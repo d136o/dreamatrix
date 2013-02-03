@@ -7,8 +7,6 @@ public class DreamatrixService extends DreamService {
 	
 	static final String TAG = "DreamatrixService";
 	
-	DreamatrixView mDreamatrixView;
-    
 	@Override
     public void onAttachedToWindow() {
         super.onAttachedToWindow();
@@ -21,8 +19,6 @@ public class DreamatrixService extends DreamService {
         setFullscreen(true);
         // Set the dream layout
         setContentView(R.layout.dreamatrix_layout);
-        
-        mDreamatrixView = (DreamatrixView) findViewById(R.id.dreamatrix);
     }
 
 	@Override
