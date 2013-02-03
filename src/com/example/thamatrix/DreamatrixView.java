@@ -1,5 +1,7 @@
 package com.example.thamatrix;
 
+import java.util.concurrent.PriorityBlockingQueue;
+
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -17,8 +19,8 @@ import android.view.SurfaceView;
 public class DreamatrixView extends SurfaceView implements SurfaceHolder.Callback {
 	
 	static final String TAG = "DreamatrixView";
-	
 	private DreamatrixThread thread;
+	private PriorityBlockingQueue<MatrixText> matrixTextQueue;
 	
 	class DreamatrixThread extends Thread {
 		
@@ -72,14 +74,30 @@ public class DreamatrixView extends SurfaceView implements SurfaceHolder.Callbac
 			
 		}
 	}
+	
+	class MatrixText implements Comparable<MatrixText> {
+		private String text;
+		private int priority; //lower is better
+		
+		public MatrixText(String txt, int priority){
+			this.text = txt;
+			this.priority = priority;
+		}
+
+		@Override
+		public int compareTo(MatrixText another) {
+			int distance = another.priority - this.priority;
+			return distance;
+		}
+	}
 
 	public DreamatrixView(Context context, AttributeSet attrs) {
 		super(context, attrs);
+		Log.d(TAG, "DreamatrixView (after call to super)");
 		
-		Log.d(TAG, "DreamatrixView");
+		this.matrixTextQueue = new PriorityBlockingQueue<DreamatrixView.MatrixText>();
 		
 		//setBackgroundResource(R.drawable.matrix);
-		
         SurfaceHolder holder = getHolder();
         holder.addCallback(this);
 
@@ -130,4 +148,21 @@ public class DreamatrixView extends SurfaceView implements SurfaceHolder.Callbac
 		thread.setRunning(true);
         thread.start();
 	}
+
+	public void addMatrixText(String headline) {
+		// TODO Auto-generated method stub
+		MatrixText mt = new MatrixText(headline, 0);
+		this.matrixTextQueue.add(mt);
+	}
+	
+	public String getMatrixText() {
+		MatrixText mt = this.matrixTextQueue.poll();
+		if(mt == null){
+			return null;
+		} else {
+			return mt.text;
+		}
+	}
+	
+	
 }

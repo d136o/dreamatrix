@@ -1,8 +1,10 @@
 package com.example.thamatrix;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
 import android.service.dreams.DreamService;
 import android.util.Log;
-import android.view.SurfaceView;
 
 public class DreamatrixService extends DreamService {
 	
@@ -45,5 +47,17 @@ public class DreamatrixService extends DreamService {
 	public void onDreamingStopped() {
 		super.onDreamingStopped();
 		Log.d(TAG, "onDreamingStopped");
+	}
+	
+	class TextReceiver extends BroadcastReceiver {
+		
+		@Override
+		public void onReceive(Context arg0, Intent arg1) {
+			// TODO Auto-generated method stub
+			// getting some text, give it to the view!
+			String headline = "blah blah blah";
+			mDreamatrixView.addMatrixText(headline);
+		}
+		
 	}
 }
