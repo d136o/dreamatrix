@@ -6,6 +6,8 @@ import android.util.Log;
 public class DreamatrixService extends DreamService {
 	
 	static final String TAG = "DreamatrixService";
+	
+	DreamatrixView mDreamatrixView;
     
 	@Override
     public void onAttachedToWindow() {
@@ -18,7 +20,9 @@ public class DreamatrixService extends DreamService {
         // Hide system UI
         setFullscreen(true);
         // Set the dream layout
-        setContentView(R.layout.service_dreamatrix);
+        setContentView(R.layout.dreamatrix_layout);
+        
+        mDreamatrixView = (DreamatrixView) findViewById(R.id.dreamatrix);
     }
 
 	@Override

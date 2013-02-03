@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.TextPaint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -18,8 +19,14 @@ import android.view.SurfaceView;
  */
 public class DreamatrixView extends SurfaceView implements SurfaceHolder.Callback {
 	
+	static final String TAG = "DreamatrixView";
+	
+	private DreamatrixThread thread;
+	
 	class DreamatrixThread extends Thread {
 		
+		static final String TAG = "DreamatrixThread";
+
 		private boolean mRun = false;
         private SurfaceHolder mSurfaceHolder;
         private Handler mHandler;
@@ -32,10 +39,19 @@ public class DreamatrixView extends SurfaceView implements SurfaceHolder.Callbac
             mHandler = handler;
             mContext = context;
             
+            Log.d(TAG, "DreamatrixThread");
+        }
+        
+        public void setRunning(boolean b) {
+        	Log.d(TAG, "setRunning");
+        	
+            mRun = b;
         }
 
 		@Override
         public void run() {
+			Log.d(TAG, "run");
+			
             while (mRun) {
                 Canvas c = null;
                 try {
@@ -44,9 +60,6 @@ public class DreamatrixView extends SurfaceView implements SurfaceHolder.Callbac
                         doDraw(c);
                     }
                 } finally {
-                    // do this in a finally so that if an exception is thrown
-                    // during the above, we don't leave the Surface in an
-                    // inconsistent state
                     if (c != null) {
                         mSurfaceHolder.unlockCanvasAndPost(c);
                     }
@@ -55,13 +68,16 @@ public class DreamatrixView extends SurfaceView implements SurfaceHolder.Callbac
         }
 		
 		private void doDraw(Canvas c) {
+			Log.d(TAG, "doDraw");
+			
+			c.drawColor(Color.RED);
 		}
 	}
-	
-	private DreamatrixThread thread;
 
 	public DreamatrixView(Context context, AttributeSet attrs) {
 		super(context, attrs);
+		
+		Log.d(TAG, "DreamatrixView");
 		
         SurfaceHolder holder = getHolder();
         holder.addCallback(this);
@@ -73,30 +89,31 @@ public class DreamatrixView extends SurfaceView implements SurfaceHolder.Callbac
             }
         });
 
-        setFocusable(true); // make sure we get key events
+        setFocusable(true);
 	}
 
 	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
+		
+		Log.d(TAG, "onDraw");
 	}
 
 	@Override
 	public void surfaceChanged(SurfaceHolder holder, int format, int width,
 			int height) {
-		// TODO Auto-generated method stub
-		
+		Log.d(TAG, "surfaceChanged");		
 	}
 
 	@Override
 	public void surfaceCreated(SurfaceHolder holder) {
-		// TODO Auto-generated method stub
-		
+		Log.d(TAG, "surfaceCreated");
+		thread.setRunning(true);
+        thread.start();
 	}
 
 	@Override
 	public void surfaceDestroyed(SurfaceHolder holder) {
-		// TODO Auto-generated method stub
-		
+		Log.d(TAG, "surfaceDestroyed");		
 	}
 }
