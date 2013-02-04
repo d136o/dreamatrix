@@ -1,5 +1,9 @@
 package com.example.thamatrix;
 
+import java.util.List;
+
+import winterwell.jtwitter.Status;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -11,7 +15,7 @@ public class DreamatrixService extends DreamService {
 	
 	static final String TAG = "DreamatrixService";
 	private boolean runningUpdates = false;
-	private static final int updateDelay = 10000;
+	private static final int updateDelay = 20000;
 	
 	private DreamatrixView mDreamatrixView;
 	private DreamatrixTextReceiver mTextReceiver;
@@ -85,8 +89,18 @@ public class DreamatrixService extends DreamService {
 		public void onReceive(Context appContext, Intent intent) {
 			Log.d(TAG, "onReceive");
 
-			String headline = ((DreamatrixApp) getApplication()).headline.getNext();;
+			String headline = ((DreamatrixApp) getApplication()).headline.getNext();
 			mDreamatrixView.addMatrixText(headline);
+			
+			/* TODO: DIEGO (what's happening man!!??)
+				Change the above (now broken) code to something like the following:
+				List<HeadlineData> list = ((DreamatrixApp) getApplication()).headline.getList();
+				for (HeadlineData headline : list) {
+					doSomething(headline.getText());
+					doSomethingElse(headline.getRanking())
+				}
+			}
+			*/
 		}
 		
 	}
