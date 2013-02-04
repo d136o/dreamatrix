@@ -75,6 +75,7 @@ public class DreamatrixView extends SurfaceView implements SurfaceHolder.Callbac
 		
 		private void doDraw(Canvas c) {
 			Log.d(TAG, "doDraw");
+
 			if(c != null && this.drawCount++ >= 0) {
 				c.drawColor(Color.RED);
 			}else{
