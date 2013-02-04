@@ -39,8 +39,10 @@ public class DreamatrixView extends SurfaceView implements SurfaceHolder.Callbac
         }
         
         public void setRunning(boolean b) {
-        	Log.d(TAG, "setRunning");
-            mRun = b;
+        	synchronized (mSurfaceHolder) {
+        		Log.d(TAG, "setRunning");
+                mRun = b;
+			}
         }
 
 		@Override
@@ -73,13 +75,14 @@ public class DreamatrixView extends SurfaceView implements SurfaceHolder.Callbac
 			Log.d(TAG, "doDraw");
 
 			if(c != null && this.drawCount++ >= 0) {
-				c.drawColor(Color.RED);
+					c.drawColor(Color.RED);
 			}else{
 				if(c == null){
 					Log.d(TAG, "NULL CANVAS!");
 				}
-				if( this.drawCount <= 0 ){
+				if( this.drawCount <= 0 && c != null ){
 					Log.d(TAG, "ltz count");
+					c.drawColor(Color.TRANSPARENT);
 				}
 			}
 		}

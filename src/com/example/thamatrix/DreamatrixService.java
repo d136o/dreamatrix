@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.service.dreams.DreamService;
 import android.util.Log;
+import android.view.View;
 
 public class DreamatrixService extends DreamService {
 	
@@ -31,6 +32,7 @@ public class DreamatrixService extends DreamService {
 		// Set the dream layout        
         setContentView(R.layout.dreamatrix_layout);
         this.mDreamatrixView = (DreamatrixView) findViewById(R.id.dreamatrix);
+        this.mDreamatrixView.setVisibility(View.INVISIBLE);
 
     }
 
