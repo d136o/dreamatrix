@@ -87,20 +87,10 @@ public class DreamatrixService extends DreamService {
 		@Override
 		public void onReceive(Context appContext, Intent intent) {
 			Log.d(TAG, "onReceive");
-
-			String headline = ((DreamatrixApp) getApplication()).headline.getNext();
-			mDreamatrixView.addMatrixText(headline);
-			
-			/* TODO: DIEGO (what's happening man!!??)
-				Change the above (now broken) code to something like the following:
-				List<HeadlineData> list = ((DreamatrixApp) getApplication()).headline.getList();
-				for (HeadlineData headline : list) {
-					doSomething(headline.getText());
-					doSomethingElse(headline.getRanking())
-				}
+			List<HeadlineData> list = ((DreamatrixApp) getApplication()).headline.getList();
+			for (HeadlineData headline : list) {
+				mDreamatrixView.addMatrixText(headline);	
 			}
-			*/
-		}
-		
+		}		
 	}
 }

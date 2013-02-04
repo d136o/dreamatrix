@@ -3,14 +3,10 @@ package com.example.thamatrix;
 import java.util.concurrent.PriorityBlockingQueue;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Message;
-import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.SurfaceHolder;
@@ -150,10 +146,9 @@ public class DreamatrixView extends SurfaceView implements SurfaceHolder.Callbac
         thread.start();
 	}
 
-	public void addMatrixText(String headline) {
+	public void addMatrixText(HeadlineData headline) {
 		// TODO Auto-generated method stub
-		HeadlineData hd = new HeadlineData(headline, 0);
-		this.matrixTextQueue.add(hd);
+		this.matrixTextQueue.add(headline);
 	}
 	
 	public String getMatrixText() {
