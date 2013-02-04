@@ -2,8 +2,6 @@ package com.example.thamatrix;
 
 import java.util.List;
 
-import winterwell.jtwitter.Status;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;

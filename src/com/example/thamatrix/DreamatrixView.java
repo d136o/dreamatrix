@@ -20,7 +20,7 @@ public class DreamatrixView extends SurfaceView implements SurfaceHolder.Callbac
 	
 	static final String TAG = "DreamatrixView";
 	private DreamatrixThread thread;
-	private PriorityBlockingQueue<MatrixText> matrixTextQueue;
+	private PriorityBlockingQueue<HeadlineData> matrixTextQueue;
 	
 	private class DreamatrixThread extends Thread {
 		
@@ -89,27 +89,11 @@ public class DreamatrixView extends SurfaceView implements SurfaceHolder.Callbac
 		}
 	}
 	
-	class MatrixText implements Comparable<MatrixText> {
-		private String text;
-		private int priority; //lower is better
-		
-		public MatrixText(String txt, int priority){
-			this.text = txt;
-			this.priority = priority;
-		}
-
-		@Override
-		public int compareTo(MatrixText another) {
-			int distance = another.priority - this.priority;
-			return distance;
-		}
-	}
-
 	public DreamatrixView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		Log.d(TAG, "DreamatrixView (after call to super)");
 		
-		this.matrixTextQueue = new PriorityBlockingQueue<DreamatrixView.MatrixText>();
+		this.matrixTextQueue = new PriorityBlockingQueue<HeadlineData>();
 		
 		//prepopulate the queue with some things
 		String[] testStrings = {"one",
@@ -117,7 +101,7 @@ public class DreamatrixView extends SurfaceView implements SurfaceHolder.Callbac
 		                        "three"};
 		
 		for (int i = 0; i < testStrings.length; i++) {
-			this.matrixTextQueue.add( new MatrixText(testStrings[i], i) );
+			this.matrixTextQueue.add( new HeadlineData(testStrings[i], i) );
 		}
 		
 		
@@ -168,16 +152,16 @@ public class DreamatrixView extends SurfaceView implements SurfaceHolder.Callbac
 
 	public void addMatrixText(String headline) {
 		// TODO Auto-generated method stub
-		MatrixText mt = new MatrixText(headline, 0);
-		this.matrixTextQueue.add(mt);
+		HeadlineData hd = new HeadlineData(headline, 0);
+		this.matrixTextQueue.add(hd);
 	}
 	
 	public String getMatrixText() {
-		MatrixText mt = this.matrixTextQueue.poll();
+		HeadlineData mt = this.matrixTextQueue.poll();
 		if(mt == null){
 			return null;
 		} else {
-			return mt.text;
+			return mt.getText();
 		}
 	}
 	

@@ -1,25 +1,31 @@
 package com.example.thamatrix;
 
-public class HeadlineData {
+public class HeadlineData implements Comparable<HeadlineData> {
 	public final static String TAG = "HeadlineData";
 	private final String mText;
-	private final int mRanking;
+	private final int mPriority;
 	
 	public HeadlineData() {
 		mText = "";
-		mRanking = 0;
+		mPriority = 0;
 	}
 
 	public HeadlineData(String text, int ranking) {
 		mText = text;
-		mRanking = ranking;
+		mPriority = ranking;
 	}
 	
 	public String getText() {
 		return mText;
 	}
 	
-	public int getRanking() {
-		return mRanking;
+	public int getPriority() {
+		return mPriority;
+	}
+
+	@Override
+	public int compareTo(HeadlineData another) {
+		int distance = another.mPriority - this.mPriority;
+		return distance;
 	}
 }
