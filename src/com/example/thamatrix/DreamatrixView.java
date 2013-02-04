@@ -69,11 +69,6 @@ public class DreamatrixView extends SurfaceView implements SurfaceHolder.Callbac
 		
 		private void doDraw(Canvas c) {
 			Log.d(TAG, "doDraw");
-			//String nextHeadline = ((DreamatrixApp) mContext.getApplicationContext()).headline.getNext();
-			//Log.d(TAG, "Drawing the headline " + nextHeadline);
-			
-			if(c != null)
-				c.drawColor(Color.RED);
 			
 		}
 	}
