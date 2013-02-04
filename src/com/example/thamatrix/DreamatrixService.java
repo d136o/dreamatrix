@@ -24,14 +24,10 @@ public class DreamatrixService extends DreamService {
         setInteractive(false);
         // Hide system UI
         setFullscreen(true);
-		// Set the dream layout
+		// Set the dream layout        
         setContentView(R.layout.dreamatrix_layout);
-        
-        mDreamatrixView = (DreamatrixView) findViewById(R.id.dreamatrix);
+        this.mDreamatrixView = (DreamatrixView) findViewById(R.id.dreamatrix);
 
-        this.mTextReceiver = new DreamatrixTextReceiver();
-        Context c = getApplicationContext();
-        c.registerReceiver(this.mTextReceiver, new IntentFilter(DreamatrixApp.NEW_HEADLINE_ACTION));
     }
 
 	@Override
@@ -44,6 +40,11 @@ public class DreamatrixService extends DreamService {
 	public void onDreamingStarted() {
 		super.onDreamingStarted();
 		Log.d(TAG, "onDreamingStarted");
+		
+		//sign up for news updates!
+        this.mTextReceiver = new DreamatrixTextReceiver();
+        Context c = getApplicationContext();
+        c.registerReceiver(this.mTextReceiver, new IntentFilter(DreamatrixApp.NEW_HEADLINE_ACTION));
 		
 		// Start dream animation here
 		mDreamatrixView.startDrawing();

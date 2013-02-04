@@ -22,7 +22,7 @@ public class DreamatrixView extends SurfaceView implements SurfaceHolder.Callbac
 	private DreamatrixThread thread;
 	private PriorityBlockingQueue<MatrixText> matrixTextQueue;
 	
-	class DreamatrixThread extends Thread {
+	private class DreamatrixThread extends Thread {
 		
 		static final String TAG = "DreamatrixThread";
 
@@ -31,25 +31,31 @@ public class DreamatrixView extends SurfaceView implements SurfaceHolder.Callbac
         private Handler mHandler;
         private Context mContext;
         
+        private int drawCount = -100;
+        
         public DreamatrixThread(SurfaceHolder surfaceHolder, Context context,
                 Handler handler) {
-            // get handles to some important objects
+        	// get handles to some important objects
+        	Log.d(TAG, "DreamatrixThread");
             mSurfaceHolder = surfaceHolder;
             mHandler = handler;
             mContext = context;
-            
-            Log.d(TAG, "DreamatrixThread");
         }
         
         public void setRunning(boolean b) {
         	Log.d(TAG, "setRunning");
-        	
             mRun = b;
         }
 
 		@Override
         public void run() {
 			Log.d(TAG, "run");
+
+			if(mRun){
+				Log.d(TAG, "TRUE");
+			}else{
+				Log.d(TAG, "FALSE");
+			}
 			
             while (mRun) {
                 Canvas c = null;
@@ -69,12 +75,16 @@ public class DreamatrixView extends SurfaceView implements SurfaceHolder.Callbac
 		
 		private void doDraw(Canvas c) {
 			Log.d(TAG, "doDraw");
-			//String nextHeadline = ((DreamatrixApp) mContext.getApplicationContext()).headline.getNext();
-			//Log.d(TAG, "Drawing the headline " + nextHeadline);
-			
-			if(c != null)
+			if(c != null && this.drawCount++ >= 0) {
 				c.drawColor(Color.RED);
-			
+			}else{
+				if(c == null){
+					Log.d(TAG, "NULL CANVAS!");
+				}
+				if( this.drawCount <= 0 ){
+					Log.d(TAG, "ltz count");
+				}
+			}
 		}
 	}
 	
@@ -100,11 +110,21 @@ public class DreamatrixView extends SurfaceView implements SurfaceHolder.Callbac
 		
 		this.matrixTextQueue = new PriorityBlockingQueue<DreamatrixView.MatrixText>();
 		
+		//prepopulate the queue with some things
+		String[] testStrings = {"one",
+		                        "two",
+		                        "three"};
+		
+		for (int i = 0; i < testStrings.length; i++) {
+			this.matrixTextQueue.add( new MatrixText(testStrings[i], i) );
+		}
+		
+		
 		//setBackgroundResource(R.drawable.matrix);
         SurfaceHolder holder = getHolder();
         holder.addCallback(this);
-
-        // create thread only; it's started in surfaceCreated()
+        
+        // create thread only; it's started via outside call to doDraw
         thread = new DreamatrixThread(holder, context, new Handler() {
             @Override
             public void handleMessage(Message m) {
@@ -115,15 +135,9 @@ public class DreamatrixView extends SurfaceView implements SurfaceHolder.Callbac
 	}
 
 	@Override
-	protected void onDraw(Canvas canvas) {
-		super.onDraw(canvas);
-		Log.d(TAG, "onDraw");
-	}
-
-	@Override
 	public void surfaceChanged(SurfaceHolder holder, int format, int width,
 			int height) {
-		Log.d(TAG, "surfaceChanged");		
+		Log.d(TAG, "surfaceChanged");
 	}
 
 	@Override
@@ -147,7 +161,7 @@ public class DreamatrixView extends SurfaceView implements SurfaceHolder.Callbac
 	
 	public void startDrawing() {
 		Log.d(TAG, "startDrawing");
-		thread.setRunning(true);
+        thread.setRunning(true);
         thread.start();
 	}
 

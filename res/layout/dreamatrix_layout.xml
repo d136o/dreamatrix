@@ -2,12 +2,13 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    
+
     <com.example.thamatrix.DreamatrixView
-      android:id="@+id/dreamatrix"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"/>
+        android:id="@+id/dreamatrix"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
     
+    <!--
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
@@ -19,7 +20,11 @@
           android:layout_height="wrap_content"
           android:layout_centerInParent="true"
           android:gravity="center_horizontal"
-          android:textColor="#88ffffff"
-          android:textSize="24sp"/>
+          android:textColor="#ff000000"
+          android:textSize="50sp"
+          android:background="#838B8Bff"
+          android:alpha="1"/>
      </RelativeLayout>
+     -->
+     
 </FrameLayout>
