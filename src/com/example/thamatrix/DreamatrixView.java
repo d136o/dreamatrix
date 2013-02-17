@@ -3,95 +3,18 @@ package com.example.thamatrix;
 import java.util.concurrent.PriorityBlockingQueue;
 
 import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.os.Handler;
-import android.os.Message;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
+import android.view.TextureView;
 
-public class DreamatrixView extends SurfaceView implements SurfaceHolder.Callback {
+public class DreamatrixView extends TextureView {
 	
 	static final String TAG = "DreamatrixView";
-	private DreamatrixThread thread;
-	private PriorityBlockingQueue<HeadlineData> matrixTextQueue;
-	
-	private class DreamatrixThread extends Thread {
-		
-		static final String TAG = "DreamatrixThread";
+		private PriorityBlockingQueue<HeadlineData> matrixTextQueue;
 
-		private boolean mRun = false;
-        private SurfaceHolder mSurfaceHolder;
-        private Handler mHandler;
-        private Context mContext;
-        
-        private int drawCount = -100;
-        
-        public DreamatrixThread(SurfaceHolder surfaceHolder, Context context,
-                Handler handler) {
-        	// get handles to some important objects
-        	Log.d(TAG, "DreamatrixThread");
-            mSurfaceHolder = surfaceHolder;
-            mHandler = handler;
-            mContext = context;
-        }
-        
-        public void setRunning(boolean b) {
-        	synchronized (mSurfaceHolder) {
-        		Log.d(TAG, "setRunning");
-                mRun = b;
-			}
-        }
-
-		@Override
-        public void run() {
-			Log.d(TAG, "run");
-
-			if(mRun){
-				Log.d(TAG, "TRUE");
-			}else{
-				Log.d(TAG, "FALSE");
-			}
-			
-            while (mRun) {
-                Canvas c = null;
-                try {
-                    c = mSurfaceHolder.lockCanvas(null);
-                    synchronized (mSurfaceHolder) {
-                        doDraw(c);
-                    }
-                }
-                finally {
-                   if (c != null) {
-                       mSurfaceHolder.unlockCanvasAndPost(c);
-                   }
-                }
-            }
-        }
-		
-		private void doDraw(Canvas c) {
-			Log.d(TAG, "doDraw");
-
-			if(c != null && this.drawCount++ >= 0) {
-					c.drawColor(Color.RED);
-			}else{
-				if(c == null){
-					Log.d(TAG, "NULL CANVAS!");
-				}
-				if( this.drawCount <= 0 && c != null ){
-					Log.d(TAG, "ltz count");
-					c.drawColor(Color.TRANSPARENT);
-				}
-			}
-		}
-	}
-	
-	public DreamatrixView(Context context, AttributeSet attrs) {
+    public DreamatrixView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		Log.d(TAG, "DreamatrixView (after call to super)");
-		
 		this.matrixTextQueue = new PriorityBlockingQueue<HeadlineData>();
 		
 		//prepopulate the queue with some things
@@ -103,52 +26,13 @@ public class DreamatrixView extends SurfaceView implements SurfaceHolder.Callbac
 			this.matrixTextQueue.add( new HeadlineData(testStrings[i], i) );
 		}
 		
-		
-		//setBackgroundResource(R.drawable.matrix);
-        SurfaceHolder holder = getHolder();
-        holder.addCallback(this);
-        
         // create thread only; it's started via outside call to doDraw
-        thread = new DreamatrixThread(holder, context, new Handler() {
-            @Override
-            public void handleMessage(Message m) {
-            }
-        });
-
         setFocusable(true);
+        
+        Log.d(TAG, "hw accel?" );
+        Log.d(TAG, String.valueOf( this.isHardwareAccelerated() ) );
 	}
-
-	@Override
-	public void surfaceChanged(SurfaceHolder holder, int format, int width,
-			int height) {
-		Log.d(TAG, "surfaceChanged");
-	}
-
-	@Override
-	public void surfaceCreated(SurfaceHolder holder) {
-		Log.d(TAG, "surfaceCreated");
-	}
-
-	@Override
-	public void surfaceDestroyed(SurfaceHolder holder) {
-		Log.d(TAG, "surfaceDestroyed");	
-		boolean retry = true;
-        thread.setRunning(false);
-        while (retry) {
-            try {
-                thread.join();
-                retry = false;
-            } catch (InterruptedException e) {
-            }
-        }
-	}
-	
-	public void startDrawing() {
-		Log.d(TAG, "startDrawing");
-        thread.setRunning(true);
-        thread.start();
-	}
-
+    	    
 	public void addMatrixText(HeadlineData headline) {
 		// TODO Auto-generated method stub
 		this.matrixTextQueue.add(headline);
@@ -162,6 +46,4 @@ public class DreamatrixView extends SurfaceView implements SurfaceHolder.Callbac
 			return mt.getText();
 		}
 	}
-	
-	
 }

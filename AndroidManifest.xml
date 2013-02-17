@@ -9,13 +9,16 @@
         android:targetSdkVersion="17" />
     
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-feature android:glEsVersion="0x00020000" android:required="true" />	
 
     <application
         android:name="com.example.thamatrix.DreamatrixApp"
         android:allowBackup="true"
+        android:hardwareAccelerated="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+        
         <activity
             android:name="com.example.thamatrix.MatrixActivity"
             android:label="@string/app_name" >
@@ -28,9 +31,11 @@
 
         <service
             android:name="com.example.thamatrix.DreamatrixService"
+            android:hardwareAccelerated="true"
             android:exported="true"
             android:icon="@drawable/ic_launcher"
             android:label="@string/dreamatrix_service_label" >
+            
             <intent-filter>
                 <action android:name="android.service.dreams.DreamService" />
 
